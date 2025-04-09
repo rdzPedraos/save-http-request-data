@@ -4,7 +4,7 @@
     "description": "Este script permite recuperar información de un endpoint HTTP/HTTPS y guardarla en un archivo plano. Es útil para automatizar la descarga de datos de APIs y servicios web.",
     "type": "module",
     "scripts": {
-        "test": "npx tsx test/ejemplo.ts",
+        "start": "npx tsx src/index.ts",
         "format": "npx prettier --write ."
     },
     "devDependencies": {

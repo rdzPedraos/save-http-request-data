@@ -1,71 +1,47 @@
 # Script para Recuperar Datos desde un Endpoint
 
-Este script permite recuperar información de un endpoint HTTP/HTTPS y guardarla en un archivo plano. Es útil para automatizar la descarga de datos de APIs y servicios web.
+Este script permite recuperar información de un endpoint HTTP/HTTPS y guardarla en un archivo plano en la carpeta `storage/`. Es útil para automatizar la descarga de datos de APIs y servicios web.
 
 ## Requisitos
 
-- Node.js (versión 12 o superior)
+-   Node.js (versión 14 o superior)
+-   npm o yarn
 
 ## Estructura de archivos
 
-- `src/fetchAndSave.js`: Contiene la función principal para recuperar y guardar datos
-- `src/ejemplo.js`: Ejemplo de uso de la función
+-   `src/index.ts`: Punto de entrada principal que ejecuta la solicitud HTTP
+-   `src/lib/HandleRequest.ts`: Clase principal para gestionar las solicitudes HTTP
+-   `src/lib/FileSystem.ts`: Manejo de operaciones de archivos
+-   `storage/`: Carpeta donde se almacenan los archivos descargados
 
-## Uso desde línea de comandos
-
-Puedes ejecutar el script directamente desde la línea de comandos:
-
-```bash
-node src/fetchAndSave.js <URL> <archivoSalida> [formato]
-```
-
-Donde:
-
-- `<URL>` es la dirección del endpoint (obligatorio)
-- `<archivoSalida>` es la ruta donde se guardará el archivo (obligatorio)
-- `[formato]` es opcional, puede ser 'json' (predeterminado) o 'text'
-
-Ejemplo:
+## Instalación
 
 ```bash
-node src/fetchAndSave.js https://jsonplaceholder.typicode.com/posts/1 ./datos.json
+npm install
 ```
 
-## Uso desde otro script
+## Uso
 
-También puedes importar y usar la función en tus propios scripts:
-
-```javascript
-const { fetchAndSaveToFile } = require("./src/fetchAndSave");
-
-async function miScript() {
-  try {
-    await fetchAndSaveToFile(
-      "https://jsonplaceholder.typicode.com/users",
-      "./usuarios.json"
-    );
-    console.log("Datos recuperados exitosamente");
-  } catch (error) {
-    console.error("Error:", error.message);
-  }
-}
-
-miScript();
-```
-
-## Ejemplo incluido
-
-Puedes ejecutar el archivo de ejemplo para ver cómo funciona:
+Puedes ejecutar el script usando npm:
 
 ```bash
-node src/ejemplo.js
+npm start
 ```
 
-Este ejemplo recupera datos de tres endpoints diferentes de JSONPlaceholder y los guarda en archivos separados.
+Este comando ejecutará `src/index.ts` usando TSX, que descargará datos desde una API y los guardará en la carpeta `storage/`.
 
-## Características
+## Configuración
 
-- Soporta tanto HTTP como HTTPS
-- Manejo automático de errores
-- Formateo de datos JSON para mejor legibilidad
-- Puede guardar como JSON formateado o texto plano
+Para modificar la URL del endpoint o el nombre del archivo de salida, edita el archivo `src/index.ts`:
+
+```typescript
+import { HandleRequest } from '@/lib/HandleRequest';
+
+HandleRequest.create()
+    .fetch('https://tu-api.com/datos')
+    .save('nombre-archivo.json')
+    .execute()
+    .catch((error) => {
+        console.error('Ha ocurrido un error:', error.message);
+    });
+```
