@@ -1,5 +1,5 @@
 {
-    "name": "save-request-data-http",
+    "name": "save-http-request-data",
     "version": "1.0.0",
     "description": "Este script permite recuperar información de un endpoint HTTP/HTTPS y guardarla en un archivo plano. Es útil para automatizar la descarga de datos de APIs y servicios web.",
     "type": "module",
