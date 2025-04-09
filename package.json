@@ -1,0 +1,19 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "Este script permite recuperar información de un endpoint HTTP/HTTPS y guardarla en un archivo plano. Es útil para automatizar la descarga de datos de APIs y servicios web.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "imports": {
+    "#/*": "./src/*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0"
+  }
+}
