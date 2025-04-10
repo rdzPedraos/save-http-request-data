@@ -52,6 +52,10 @@ class HandleRequest {
         return this;
     }
 
+    /**
+     * Save data to a file
+     * @param path - string or callback function that returns a string
+     */
     save(path: string | ((data: any) => string)) {
         const callback = async () => {
             if (!this.data) {
