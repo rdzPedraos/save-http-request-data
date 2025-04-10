@@ -41,7 +41,7 @@ class HandleRequest {
         return this;
     }
 
-    save(path: string) {
+    save(path: string | ((data: any) => string)) {
         const callback = async () => {
             if (!this.data) {
                 throw new Error(
@@ -49,6 +49,7 @@ class HandleRequest {
                 );
             }
 
+            path = typeof path === 'function' ? path(this.data) : path;
             await FileSystem.save(path, this.data);
         };
 
