@@ -1,7 +1,5 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { FileSystem } from './FileSystem';
-
-type MethodType = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 class HandleRequest {
     private data: any;
@@ -15,15 +13,24 @@ class HandleRequest {
         this.promiseChain = this.promiseChain.then(callback);
     }
 
-    fetch(url: string, method: MethodType = 'GET') {
+    /**
+     * Fetch data from a URL or an object with AxiosRequestConfig properties
+     * @param props - URL or AxiosRequestConfig
+     */
+    fetch(props: AxiosRequestConfig | string) {
+        if (typeof props === 'string') {
+            props = { url: props };
+        }
+
         const callback = async () => {
             try {
-                const response = await axios({
-                    url,
-                    method,
-                });
+                const response = await axios(props);
+
+                if (response.status < 200 || response.status >= 300) {
+                    throw new Error(response.statusText);
+                }
+
                 this.data = response.data;
-                return this;
             } catch (error) {
                 console.error('Error en la petición:', error);
                 throw error;
@@ -43,7 +50,6 @@ class HandleRequest {
             }
 
             await FileSystem.save(path, this.data);
-            return this;
         };
 
         this.addPromise(callback);
